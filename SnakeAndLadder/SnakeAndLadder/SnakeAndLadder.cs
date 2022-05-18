@@ -11,7 +11,7 @@ namespace SnakeAndLadder
        const int START_POSITION = 0;
        const int END_POSITION = 100;
        public static int currentPosition = 0;
-        public static int selectOption = 0;
+       public static int selectOption = 0;
        static Random random = new Random();
         public static int throwDice()
         {
@@ -21,36 +21,42 @@ namespace SnakeAndLadder
         {
             return random.Next(1,4);
         }
-        public static int playerOption()
+
+        static void Main(string[] args)
         {
-            while (currentPosition < END_POSITION-1)
+            while (currentPosition < END_POSITION - 1)
             {
                 int throwDices = throwDice();
                 int selectOption = checkForOption();
-                if (selectOption == 2)
+                switch (selectOption)
                 {
-                    currentPosition += throwDices;
+                    case 1:
+                        Console.WriteLine("Player got ladder");
+                        currentPosition += throwDices;
+                        if (currentPosition > END_POSITION)
+                        {
+                            currentPosition -= throwDices;
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine("Player got snake");
+                        if ((currentPosition - throwDices) < 0)
+                        {
+                            currentPosition = 0;
+                        }
+                        else
+                        {
+                            currentPosition -= throwDices;
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("Player not play");
+                        break;
+                    default:
+                        break;
+
                 }
-                else if (selectOption == 3)
-                {
-                    currentPosition -= throwDices;
-                    if (currentPosition < 0)
-                    {
-                        currentPosition = START_POSITION;
-                    }
-                }
-                else
-                {
-                    // Console.WriteLine("Do nothing player stay in same position");
-                }
-            }
-            return currentPosition;
-        }
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Start position is: " + START_POSITION);
-            Console.WriteLine("End postion is: " + END_POSITION);
-            Console.WriteLine("Current position is: " + playerOption());
+            }   
 
         }
     }
