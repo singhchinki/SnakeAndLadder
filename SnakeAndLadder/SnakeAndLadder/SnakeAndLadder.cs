@@ -8,10 +8,8 @@ namespace SnakeAndLadder
 {
     internal class SnakeAndLadder
     {
-       const int START_POSITION = 0;
-       const int END_POSITION = 100;
+       const int WIN_POSITION = 0;
        public static int currentPosition = 0;
-       public static int selectOption = 0;
        static Random random = new Random();
         public static int throwDice()
         {
@@ -24,16 +22,19 @@ namespace SnakeAndLadder
 
         static void Main(string[] args)
         {
-            while (currentPosition < END_POSITION - 1)
+            int RollDiceCount = 0;
+            while (currentPosition < WIN_POSITION - 1)
             {
                 int throwDices = throwDice();
+                RollDiceCount++;
                 int selectOption = checkForOption();
                 switch (selectOption)
                 {
                     case 1:
                         Console.WriteLine("Player got ladder");
                         currentPosition += throwDices;
-                        if (currentPosition > END_POSITION)
+                        Console.WriteLine("Current position is=" + currentPosition);
+                        if (currentPosition > WIN_POSITION)
                         {
                             currentPosition -= throwDices;
                         }
@@ -47,6 +48,7 @@ namespace SnakeAndLadder
                         else
                         {
                             currentPosition -= throwDices;
+                            Console.WriteLine("current Position is=" +currentPosition);
                         }
                         break;
                     case 3:
@@ -54,10 +56,14 @@ namespace SnakeAndLadder
                         break;
                     default:
                         break;
-
+                }
+                if (currentPosition == WIN_POSITION)
+                {
+                    Console.WriteLine("Player won!");
+                    Console.WriteLine("number of dice was played by player for win the game is" + RollDiceCount);
+                    break;
                 }
             }   
-
-        }
+         }
     }
 }
