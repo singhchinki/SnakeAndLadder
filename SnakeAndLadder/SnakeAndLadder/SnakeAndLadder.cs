@@ -13,9 +13,7 @@ namespace SnakeAndLadder
         static void Main(string[] args)
         {
             Console.WriteLine("Start position is: " + START_POSITION);
-            Console.WriteLine("End postion is: " + END_POSITION);
-
-               
+            Console.WriteLine("End postion is: " + END_POSITION);      
             
         }
     }
