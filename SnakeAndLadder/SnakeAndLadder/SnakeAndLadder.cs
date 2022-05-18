@@ -8,10 +8,10 @@ namespace SnakeAndLadder
 {
     internal class SnakeAndLadder
     {
-       const int WIN_POSITION = 0;
+       const int WIN_POSITION = 100;
        public static int currentPosition = 0;
        static Random random = new Random();
-        public static int throwDice()
+       public static int throwDice()
         {
             return random.Next(1, 7);
         }
@@ -22,33 +22,52 @@ namespace SnakeAndLadder
 
         static void Main(string[] args)
         {
-            int RollDiceCount = 0;
+            int playerOnePosition = 0;
+            int playerTwoPosition = 0;
+            int playerOneRollDiceCount = 0;
+            int playerTwoRollDiceCount = 0;
             while (currentPosition < WIN_POSITION - 1)
             {
-                int throwDices = throwDice();
-                RollDiceCount++;
+                int playerOnethrowDices = throwDice();
+                playerOneRollDiceCount++;
+                int playerTwothrowDices = throwDice();
+                playerTwoRollDiceCount++;
                 int selectOption = checkForOption();
                 switch (selectOption)
                 {
                     case 1:
                         Console.WriteLine("Player got ladder");
-                        currentPosition += throwDices;
-                        Console.WriteLine("Current position is=" + currentPosition);
-                        if (currentPosition > WIN_POSITION)
+                        playerOnePosition += playerOnethrowDices;
+                        playerTwoPosition += playerTwothrowDices;
+
+                        if (playerOnePosition > WIN_POSITION)
                         {
-                            currentPosition -= throwDices;
+                            playerOnePosition -= playerOnethrowDices;
                         }
+                        else if (playerOnePosition > WIN_POSITION)
+                        {
+                            playerTwoPosition -= playerOnethrowDices;
+                        }
+                        Console.WriteLine("player one position is=" + playerOnePosition);
+                        Console.WriteLine("player two position is=" + playerTwoPosition);
                         break;
                     case 2:
                         Console.WriteLine("Player got snake");
-                        if ((currentPosition - throwDices) < 0)
+                        if ((playerOnePosition - playerOnethrowDices) < 0)
                         {
-                            currentPosition = 0;
+                            playerOnePosition = 0;
                         }
                         else
                         {
-                            currentPosition -= throwDices;
-                            Console.WriteLine("current Position is=" +currentPosition);
+                            playerOnePosition -= playerOnethrowDices;
+                        }
+                        if ((playerTwoPosition - playerTwothrowDices) < 0)
+                        {
+                            playerTwoPosition = 0;
+                        }
+                        else
+                        {
+                            playerTwoPosition-= playerTwothrowDices;
                         }
                         break;
                     case 3:
@@ -57,12 +76,18 @@ namespace SnakeAndLadder
                     default:
                         break;
                 }
-                if (currentPosition == WIN_POSITION)
+                if (playerOnePosition == WIN_POSITION)
                 {
-                    Console.WriteLine("Player won!");
-                    Console.WriteLine("number of dice was played by player for win the game is" + RollDiceCount);
+                    Console.WriteLine("Player one is won!");
+                    Console.WriteLine("number of dice was played by player for win the game is" + playerOneRollDiceCount);
                     break;
                 }
+                else if ((playerTwoPosition == WIN_POSITION) && (playerOnePosition != WIN_POSITION))
+                {
+                    Console.WriteLine("Player Two is won!");
+                    Console.WriteLine("number of dice was played by player for win the game is" + playerOneRollDiceCount);
+                    break;
+                }  
             }   
          }
     }
