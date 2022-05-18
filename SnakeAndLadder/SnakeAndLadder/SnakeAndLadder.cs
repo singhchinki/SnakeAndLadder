@@ -23,23 +23,26 @@ namespace SnakeAndLadder
         }
         public static int playerOption()
         {
-            int throwDices = throwDice();
-            int selectOption = checkForOption();
-            if (selectOption == 2)
+            while (currentPosition < END_POSITION-1)
             {
-                currentPosition += throwDices;
-            }
-            else if (selectOption == 3)
-            {
-                currentPosition -= throwDices;
-                if (currentPosition < 0)
+                int throwDices = throwDice();
+                int selectOption = checkForOption();
+                if (selectOption == 2)
                 {
-                    currentPosition = START_POSITION;
+                    currentPosition += throwDices;
                 }
-            }
-            else
-            {
-                Console.WriteLine("Do nothing player stay in same position");
+                else if (selectOption == 3)
+                {
+                    currentPosition -= throwDices;
+                    if (currentPosition < 0)
+                    {
+                        currentPosition = START_POSITION;
+                    }
+                }
+                else
+                {
+                    // Console.WriteLine("Do nothing player stay in same position");
+                }
             }
             return currentPosition;
         }
